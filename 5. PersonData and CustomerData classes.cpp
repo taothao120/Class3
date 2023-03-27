@@ -1,4 +1,4 @@
-Design a class named PersonData with the following member variables:
+/*Design a class named PersonData with the following member variables:
 - lastName 
 - firstName
 - address
@@ -15,256 +15,181 @@ The customerNumber variable will be used to hold a unique integer for each custo
 mailingList variable should be a bool. It will be set to true if the customer wishes to be on a mailing 
 list, or false if the customer does not wish to be on a mailing list. Write appropriate accessor and mutator 
 functions for these member variables. Demonstrate an object of the CustomerData class in a simple 
-program.
+program.*/
 
-#ifndef PersonData_H
-#define PersonData_H
+# include <iostream>
+# include <string>
+using namespace std;
 
-#include <string>
-#include <iostream>
-
-
-
-class PersonData 
+class PersonData
 {
-private:
-	std::string lastName;
-	std::string firstName;
-	std::string address;
-	std::string city;
-	std::string state;
-	std::string zipCode;
-        std::string phoneNum;
-
-public:
-	PersonData();
-	~PersonData();
-	PersonData(std::string last, std::string first, std::string address, std::string city, std::string s, std::string zip, std::string phone);
-
-
-	//Accessors
-	void setlastName(std::string last);
-	void setfirstName(std::string first);
-	void setaddress(std::string add);
-	void setcity(std::string c);
-	void setstate(std::string s);
-	void setzipCode(std::string zip);
-	void setphoneNum(std::string phone);
-
-	//Mutators
-
-	std::string getlastName();
-	std::string getfirstName();
-	std::string getaddress();
-	std::string getcity();
-	std::string getstate();
-	std::string getzipCode();
-	std::string getphoneNum();
-
+    private:
+        string lastName;
+        string firstName;
+        string address;
+        string city;
+        string state;
+        int zip;
+        string phone;
+    public:
+        // constructors
+        PersonData()
+        {
+            lastName = "";
+            firstName = "";
+            address = "";
+            city = "";
+            state = "";
+            zip = 0;
+            phone = "";
+        }
+        
+        PersonData(string ln, string fn, string add, string c, string s, int z, string ph)
+        {
+            lastName = ln;
+            firstName = fn;
+            address = add;
+            city = c;
+            state = s;
+            zip = z;
+            phone = ph;
+        }
+        
+        // mutator functions
+        void setLastName(string ln)
+        { lastName = ln; }
+        
+        void setFirstName(string fn)
+        { firstName = fn; }
+        
+        void setAddress(string add)
+        { address = add; }
+        
+        void setCity(string c)
+        { city = c; }
+        
+        void setState(string s)
+        { state = s; }
+        
+        void setZip(int z)
+        { zip = z; }
+        
+        void setPhone(string ph)
+        { phone = ph; }
+        
+        // accessor functions
+        string getLastName() const
+        { return lastName; }
+        
+        string getFirstName() const
+        { return firstName; }
+        
+        string getAddress() const
+        { return address; }
+        
+        string getCity() const
+        { return city; }
+        
+        string getState() const
+        { return state; }
+        
+        int getZip() const
+        { return zip; }
+        
+        string getPhone() const
+        { return phone; }
+        
+        // display functions
+        void displayPersonData() const
+        {
+            cout << "Last Name:\t\t" << getLastName() << endl;
+            cout << "First Name:\t\t" << getFirstName() << endl;
+            cout << "Address:\t\t" << getAddress() << endl;
+            cout << "City:\t\t\t" << getCity() << endl;
+            cout << "State:\t\t\t" << getState() << endl;
+            cout << "Zip:\t\t\t" << getZip() << endl;
+            cout << "Phone:\t\t\t" << getPhone() << endl;
+        }
 };
-#endif // !PersonData_H;
-
-#include "stdafx.h"
-#include "PersonData.h"
-
-
-PersonData::PersonData()
- :lastName(""),firstName(""), address(""), state(""),city(""), zipCode(""), phoneNumber("")
-{
-
-}
-
-
-PersonData::~PersonData()
-{
-}
-
-PersonData::PersonData(std::string last, std::string first, std::string add, std::string c, std::string s, std::string zip, std::string phone)
- :lastName(last), firstName(first), address(add), city( c), state( s),	zipCode (zip), phoneNum( phone)
-{
-	
-}
-
-void PersonData::setlastName(std::string last)
-{
-	lastName = last;
-}
-
-void PersonData::setfirstName(std::string first)
-{
-	firstName = first;
-}
-
-void PersonData::setaddress(std::string add)
-{
-	address = add;
-}
-
-void PersonData::setcity(std::string c)
-{
-	city = c;
-}
-
-void PersonData::setstate(std::string s)
-{
-	state = s;
-}
-
-void PersonData::setzipCode(std::string zip)
-{
-	zipCode = zip;
-}
-
-void PersonData::setphoneNum(std::string phone)
-{
-	phoneNum = phone;
-}
-
-std::string PersonData::getlastName()
-{
-
-	return lastName;
-}
-
-std::string PersonData::getfirstName()
-{
-	return firstName;
-}
-
-std::string PersonData::getaddress()
-{
-	return address;
-}
-
-std::string PersonData::getcity()
-{
-	return city;
-}
-
-std::string PersonData::getstate()
-{
-	return state;
-}
-
-std::string PersonData::getzipCode()
-{
-	return zipCode;
-}
-
-std::string PersonData::getphoneNum()
-{
-	return phoneNum;
-}
-
-#pragma once
-#ifndef CustomerData_H
-#define CustomerData_H
-
-
-#include "PersonData.h"
-
-
 
 class CustomerData : public PersonData
 {
-private: 
-	int customerNUM;
-	bool mailingList;
-public:
-	CustomerData();
-	CustomerData(std::string last, std::string first, std::string add, std::string c, std::string s, std::string zip,std::string phone, int custNUM, bool mail);
-	
-
-	//Accessors
-	void setcustomerNUM(int custNUM);
-	void setmailingList(bool mail);
-	//Mutators
-	int getcustomerNUM();
-	bool getmailingList();
+    private:
+        int customerNumber;
+        bool mailingList;
+    public:
+        // constructors
+        CustomerData() : PersonData()
+        {
+            customerNumber = 0;
+            mailingList = false;
+        }
+        
+        CustomerData(int num, bool mail, string ln, string fn, string add, string c, string s, int z, string ph) : PersonData(ln, fn, add, c, s, z, ph)
+        {
+            customerNumber = num;
+            mailingList = mail;
+        }
+        
+        // mutator functions
+        void setCustomerNumber(int num)
+        { customerNumber = num; }
+        
+        void setMailingList(bool mail)
+        { mailingList = mail; }
+        
+        // accessor functions
+        int getCustomerNumber() const
+        { return customerNumber; }
+        
+        bool getMailingList() const
+        { return mailingList; }
+        
+        // display functions
+        void displayCustomerData() const
+        {
+            displayPersonData();
+            cout << "Customer Number:\t" << getCustomerNumber() << endl;
+            cout << "Mailing List:\t\t" << getMailingList() << endl;
+        }
 };
-#endif // !CustomerData_H;
-
-#include "stdafx.h"
-#include "CustomerData.h"
-#include "PersonData.h"
-
-
-
-CustomerData::CustomerData()
- : personData() , customerNUM ( 0),mailingList( false)
-{
-	
-}
-
-
-CustomerData::CustomerData(std::string last, std::string first, std::string add, std::string c, std::string s, std::string zip,std::string phone, int custNUM, bool mail)
- : personData(last,first,add,c,s,zip,phone), customerNUM(custNUM), mailingList(mail)
-{
-
-}
-
-void CustomerData::setcustomerNUM(int custNUM)
-{
-	customerNUM = custNUM;
-}
-
-void CustomerData::setmailingList(bool mail)
-{
-	mailingList = mail;
-}
-
-int CustomerData::getcustomerNUM()
-{
-	return customerNUM;
-}
-
-bool CustomerData::getmailingList()
-{
-	return mailingList;
-}
-
-#include "stdafx.h"
-#include "CustomerData.h"
-
-void displayCUSTOMER(CustomerData C); //function used to display the customer information from an instance of CustomerData
-
-
 
 int main()
 {
-	CustomerData defaultCON; //object relates to the default constructor in CustomerData
-
-defaultCon.setlastName("adria");
-defaultCon.setfirstName("McRey");
-defaultCon.setaddress("0874784784");
-defaultCon.setcity("L.A");
-defaultCon.setstate("California");
-defaultCon.setzipCode("00000");
-defaultCon.setphoneNum("1234567");
-defaultCon.setcustomerNUM(5555);
-defaultCon.setmailingList(true);
-
-							 //object uses the second constructor in Customer Data to populate the information fields. 
-	CustomerData info("Smith", "Joan", "123 Main Street", "Smithville", "NC", "99999", 12345, true);
-
-	std::cout << " Customer #1 \n";
-	std::cout << " ____________ \n";
-	displayCUSTOMER(defaultCON);
-	std::cout << " Customer #2 \n";
-	std::cout << " ____________ \n";
-	displayCUSTOMER (info);
-
+    // welcome message
+    cout << "This program uses a class named 'CustomerData' derived from a class named 'PersonData'." << endl;
+    
+    cout << "\n\n";
+    
+    // demonstration
+    cout << "To demonstrate these classes, a CustomerData object is created with the " << endl; 
+    cout << "default constructor (no arguments)." << endl;
+    cout << endl;
+    cout << "Then, the data is displayed with a CustomerData display function that uses " << endl;
+    cout << "other accessor and display functions from both classes." << endl;
+    cout << endl;
+    
+    CustomerData noData;
+    noData.displayCustomerData();
+    
+    cout << "\n\n";
+    cout << "Press [Enter] to continue." << endl;
+    cin.get();
+    cout << endl;
+    
+    cout << "Next, a CustomerData object is created with all nine arguments passed to the " << endl;
+    cout << "CustomerData constructor." << endl;
+    cout << endl;
+    cout << "Here is the result of calling CustomerData's display function:" << endl;
+    cout << endl;
+    
+    CustomerData kyle(237, true, "Wagner", "Kyle", "5555 Elm St.", "Emmetsburg", "IA", 50536, "(712) 555-5555");
+    kyle.displayCustomerData();
+    
+    
+    // exit message
+    cout << "\n\n";
+    cout << "Press [Enter] to exit program." << endl;
+    cin.get();
     return 0;
-}
-
-void displayCUSTOMER(CustomerData C)
-{
-	std::cout << " Last Name: " << C.getlastName() << std::endl; 
-std::	cout << " First Name: " << C.getfirstName() << std::endl;
-	std::cout << " Address: " << C.getaddress() << std::endl;
-	std::cout << " State: " << C.getstate() << std::endl;
-	std::cout << " City: " << C.getcity() << std::endl;
-	std::cout << " Zip: " << C.getzipCode() << std::endl;
-	std::cout << " Customer Number: " << C.getcustomerNUM() << std::endl;
-	std::cout << " Mailing List? " << C.getmailingList() << std::endl;
 }
