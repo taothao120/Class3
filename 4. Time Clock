@@ -1,0 +1,216 @@
+
+
+#include <iostream>
+#include <MilTime.cpp> // this file create from ex3 new.
+using std::stringstream;
+
+// TimeClock class derived from the MilTime class
+class TimeClock : public MilTime
+{
+    private:
+        int startingTime;            // Starting time in military format
+        int endingTime;            // Ending time in military format
+
+    public:
+        // Constructor
+        TimeClock() : MilTime()
+        {
+            startingTime = 0;
+            endingTime = 0;
+        }
+
+        // Parameterized constructor
+        TimeClock(int sTHrs, int eTHrs) : MilTime()
+        {
+            setStartingTime(sTHrs);   
+            setEndingTime(eTHrs);   
+        }
+
+        // Mutator functions
+        void setStartingTime(const int);
+        void setEndingTime(const int);
+        int calcElapsedHours() const;
+        int calcElapsedMinutes() const;
+
+        // Accessor functions
+        string TimeClock::getStartingTime()   
+        {
+            setTime(startingTime, 0);
+            return getHour();
+        }
+
+        string getEndingTime()               
+        {
+            setTime(endingTime, 0);
+            return getHour();
+        }
+
+        string getElapsedTime() const;
+};
+
+#endif
+
+TimeClock.cpp
+
+#include "TimeClock.h"
+
+#include <iostream>
+using std::cout;
+
+#include <cstdlib>
+
+/* **********************************************************
+            TimeClock::setStartingTime() : const int
+    If the argument passed to this function is valid, it is
+    stored in the startingTime variable. Otherwise an error-
+    message is output and the program exits.
+   ********************************************************** */
+
+void TimeClock::setStartingTime(const int sTHrs)
+{
+    if (isMilTime(sTHrs, 0) == true)
+    {
+        startingTime = sTHrs;
+    }
+    else
+    {
+        cout << "\nInput Error!\n"
+            << sTHrs << " is no valid military time.\n"
+            << "This program will now terminate ...\n";
+        exit(0);
+    }
+}
+
+/* **********************************************************
+            TimeClock::setEndingTime() : const int
+    If the argument passed to this function is valid, it is
+    stored in the endingTime variable. Otherwise an error-
+    message is output and the program exits.
+   ********************************************************** */
+
+void TimeClock::setEndingTime(const int eTHrs)
+{
+    if (isMilTime(eTHrs, 0) == true)
+    {
+        endingTime = eTHrs;
+    }
+    else
+    {
+        cout << "\nInput Error!\n"
+            << eTHrs << " is no valid military time.\n"
+            << "This program will now terminate ...\n";
+        exit(0);
+    }
+}
+
+/* **********************************************************
+            TimeClock::calcElapsedHours()
+    This function calculates and returns the number of hours
+    that have passed.
+   ********************************************************** */
+
+int TimeClock::calcElapsedHours() const
+{
+    int elHrs = 0;
+
+    endingTime > startingTime ? elHrs = (endingTime - startingTime) / 100 :
+                                         elHrs = (startingTime - endingTime) / 100;
+   
+    return elHrs;
+}
+
+/* **********************************************************
+            TimeClock::calcElapsedMinutes()
+    This function calculates and returns the number of minutes
+    that have passed.
+   ********************************************************** */
+
+int TimeClock::calcElapsedMinutes() const
+{
+    int elMins = 0;
+
+    endingTime > startingTime ? elMins = (endingTime % 100) - (startingTime % 100) :   
+                                         elMins = (startingTime % 100) - (endingTime % 100);
+
+    if (elMins < 0)
+    {
+        elMins += 60;
+    }
+
+    return elMins;
+}
+
+/* **********************************************************
+            TimeClock::getElapsedTime()
+    This function formats and returns the elapsed time.
+   ********************************************************** */
+
+string TimeClock::getElapsedTime() const
+{
+    stringstream ss;
+    ss.str("");
+    ss.clear(stringstream::goodbit);
+   
+    int elapsedHrs = calcElapsedHours();
+    int elapsedMins = calcElapsedMinutes();
+
+    elapsedHrs == 1 ? ss << elapsedHrs   << " Hour " : ss << elapsedHrs << " Hours ";
+    elapsedMins == 1 ? ss << elapsedMins << " Minute" : ss << elapsedMins << " Minutes";
+
+    return ss.str();
+}
+
+void print(TimeClock &);
+
+int main()
+{
+    int startingTime = 0;
+    int endingTime = 0;
+
+    cout << "TIME CLOCK - ELAPSED TIME CALCULATOR\n\n";
+    cout << "This program lets you enter a starting and ending time\n"
+          << "in military time format. It then calculates and displays\n"
+          << "the elapsed time. Here is an example:\n";
+
+    // Create a TimeClock object
+    TimeClock clock(255, 2112);
+    print(clock);
+
+    // Create another TimeClock object
+    TimeClock clockOne;
+
+    // The user is asked to enter a starting and ending time
+    // expressed in military hours
+    cout << "Enter the starting time: ";
+    cin >> startingTime;
+    clockOne.setStartingTime(startingTime);
+   
+    cout << "Enter the ending time: ";
+    cin >> endingTime;
+    clockOne.setEndingTime(endingTime);
+   
+    print(clockOne);
+
+    cout << "Thank you for trying the Elapsed Time Calculator! Have a nice day!";
+
+    cin.get();
+    cin.ignore();
+    return 0;
+}
+
+/* **********************************************************
+            print() : obj &
+    This function accepts a TimeClock object. It outputs the
+    starting, ending and elapsed time.
+   ********************************************************** */
+
+void print(TimeClock &tC)
+{
+    cout << "\n\nSTARTING TIME\n"
+        << tC.getStartingTime() << "\n\n";
+    cout << "ENDING TIME\n"
+        << tC.getEndingTime() << "\n\n";
+    cout << "TIME ELAPSED\n"
+        << tC.getElapsedTime() << "\n\n\n";
+}
+
